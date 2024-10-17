@@ -3,7 +3,7 @@
 import { forwardRef, ReactNode } from "react";
 import { Float } from "@react-three/drei";
 import { Group } from "three";
-import { SodaCan, SodaCanProps } from "./sodaCan";
+import { SodaCan, SodaCanProps } from "./SodaCan";
 
 type FloatingCanProps = {
   flavor?: SodaCanProps["flavor"];
