@@ -12,6 +12,7 @@ import { Bubbles } from "./Bubbles";
 import { useStore } from "../hooks/useStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { Bounded } from "./Bounded";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -25,10 +26,11 @@ export const Hero: React.FC<Props> = () => {
 
   useGSAP(
     () => {
-      if (!ready && isDesktop) return;
-      const itroTl = gsap.timeline();
+      if (ready && isDesktop) return;
 
-      itroTl
+      const introTl = gsap.timeline();
+
+      introTl
         .set(".hero", { opacity: 1 })
         .from(".hero-header-word", {
           scale: 3,
@@ -52,6 +54,7 @@ export const Hero: React.FC<Props> = () => {
         .from(".hero-button", {
           opacity: 0,
           y: 10,
+          duration: 0.6,
         });
 
       const scrollTl = gsap.timeline({
@@ -62,11 +65,17 @@ export const Hero: React.FC<Props> = () => {
           scrub: 1.5,
         },
       });
+
       scrollTl
         .fromTo(
           "body",
-          { backgroundColor: "#FDE047" },
-          { backgroundColor: "#D9F99D", overwrite: "auto" },
+          {
+            backgroundColor: "#FDE047",
+          },
+          {
+            backgroundColor: "#D9F99D",
+            overwrite: "auto",
+          },
           1
         )
         .from(".text-side-heading .split-char", {
@@ -85,6 +94,7 @@ export const Hero: React.FC<Props> = () => {
     },
     { dependencies: [ready, isDesktop] }
   );
+
   return (
     <Bounded className="hero opacity-0">
       <div className="grid hero">
@@ -100,7 +110,7 @@ export const Hero: React.FC<Props> = () => {
           <div className="grid auto-rows-min place-items-center text-center">
             <h1 className="text-orange-500 text-7xl font-black uppercase md:text-[9rem] lg:text-[13rem]">
               <p className="hero-header-word">live</p>
-              <p className="hero-header-word -mt-8">Gutsy</p>
+              <p className="hero-header-word -mt-4 md:-mt-8">Gutsy</p>
             </h1>
             <div className="mt-12 text-5xl font-semibold text-sky-950 lg:text-6xl hero-subheading">
               <p>Soda Perfected</p>
@@ -115,19 +125,24 @@ export const Hero: React.FC<Props> = () => {
         </div>
 
         {/* Side Text Section */}
+
         <div className="text-side relative z-[80] grid h-screen items-center gap-4 md:grid-cols-2">
-          <div className="text-center md:text-left">
+          <Image
+            src="/images/all-cans-bunched.png"
+            width={64}
+            height={64}
+            alt={"cans butched"}
+            className="md:hidden w-full"
+          />
+          <div className="text-center flex flex-col justify-center items-center backdrop-blur-lg">
             <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-sky-950 lg:text-8xl">
               <TextSplitter text={"Try all five flavors"} />
             </h2>
             <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-sky-950">
               <p>
                 Our soda is made with real fruit juice and a touch of cane
-                sugar.
-                <br />
-                We never use artificial sweeteners or high fructose corn syrup.
-                <br />
-                Try all five flavors and find your favorite!
+                sugar. We never use artificial sweeteners or high fructose corn
+                syrup. Try all five flavors and find your favorite!
               </p>
             </div>
           </div>
